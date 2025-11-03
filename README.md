@@ -182,26 +182,30 @@ Storage	Local / GetStorage	Secure / FlutterSecureStorage
 Flow	Simulated PKCE exchange	Real browser-based AppAuth flow
 Logout	Local clear only	OIDC end_session + clear
 Tests	Mock-only	Real token + Dio refresh logic
-
+```mermaid
 flowchart LR
 subgraph Pro["AuthFlow Pro (Mock)"]
 A1["🧱 Local MockAuthServer"]
-A2["💾 GetStorage (Local)"]
+A2["💾 GetStorage (Local Tokens)"]
 A3["🧩 Simulated PKCE Exchange"]
 A4["🚪 Local Clear Only (Logout)"]
 A5["🧪 Mock-only Tests"]
+A6["🌐 Basic Dio Interceptor (no refresh)"]
+A7["🔒 Dev-level Security / Local Data"]
 end
 
     subgraph Adv["AuthFlow Advanced (Real)"]
-      B1["🌐 Real OIDC Provider (Auth0 / Keycloak)"]
-      B2["🔐 Flutter Secure Storage"]
-      B3["🔑 Real Browser-based AppAuth Flow"]
-      B4["🚀 OIDC End Session + Clear"]
-      B5["✅ Real Token + Dio Refresh Logic"]
+      B1["🌍 Real OIDC Provider (Auth0 / Keycloak / Django OAuth)"]
+      B2["🔐 Flutter Secure Storage (encrypted)"]
+      B3["🔑 Real Browser-based AppAuth Flow (PKCE)"]
+      B4["🚀 OIDC End Session + Secure Logout"]
+      B5["✅ Real Token + Dio Refresh Logic Tests"]
+      B6["⚙️ Advanced Dio Interceptors (Authorization + Refresh + Retry)"]
+      B7["🛡️ Production-grade Security + PKCE S256"]
     end
 
     Pro --> Adv
-
+```
 ⚙️ Continuous Integration (GitHub Actions)
 Runs automatically on every push / PR:
 ```bash
