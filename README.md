@@ -3,7 +3,7 @@
 ![CI](https://github.com/ParastooShabani/flutter_authflow_advanced/actions/workflows/ci.yaml/badge.svg)
 
 
-<div align="center">
+<div style="text-align: center;">
 
 <img alt="Flutter" src="https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white" />
 <img alt="Dart" src="https://img.shields.io/badge/Dart-0175C2?logo=dart&logoColor=white" />
@@ -182,6 +182,25 @@ Storage	Local / GetStorage	Secure / FlutterSecureStorage
 Flow	Simulated PKCE exchange	Real browser-based AppAuth flow
 Logout	Local clear only	OIDC end_session + clear
 Tests	Mock-only	Real token + Dio refresh logic
+
+flowchart LR
+subgraph Pro["AuthFlow Pro (Mock)"]
+A1["🧱 Local MockAuthServer"]
+A2["💾 GetStorage (Local)"]
+A3["🧩 Simulated PKCE Exchange"]
+A4["🚪 Local Clear Only (Logout)"]
+A5["🧪 Mock-only Tests"]
+end
+
+    subgraph Adv["AuthFlow Advanced (Real)"]
+      B1["🌐 Real OIDC Provider (Auth0 / Keycloak)"]
+      B2["🔐 Flutter Secure Storage"]
+      B3["🔑 Real Browser-based AppAuth Flow"]
+      B4["🚀 OIDC End Session + Clear"]
+      B5["✅ Real Token + Dio Refresh Logic"]
+    end
+
+    Pro --> Adv
 
 ⚙️ Continuous Integration (GitHub Actions)
 Runs automatically on every push / PR:
