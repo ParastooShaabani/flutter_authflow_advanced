@@ -88,18 +88,19 @@ lib/
 -------------------------------------------------------------------------
 
 🧩 Key Ideas
-AuthRepository orchestrates the entire flow:
-beginAuth → exchangeCode → refresh → logout
+- AuthRepository orchestrates the entire flow:
+- 
+- beginAuth → exchangeCode → refresh → logout
 
-Dio interceptors keep API code clean — all Authorization and refresh logic lives centrally.
+- Dio interceptors keep API code clean — all Authorization and refresh logic lives centrally.
 
-Real OIDC provider replaces mock servers from the Pro version.
+- Real OIDC provider replaces mock servers from the Pro version.
 
-RefreshInterceptor seamlessly retries failed 401s after token renewal.
+- RefreshInterceptor seamlessly retries failed 401s after token renewal.
 
-Logout calls the OIDC end_session_endpoint and clears secure storage.
+- Logout calls the OIDC end_session_endpoint and clears secure storage.
 
-
+```bash
 class AppEnv {
 static const auth0Domain = 'YOUR_TENANT.auth0.com';
 static const auth0ClientId = 'YOUR_CLIENT_ID';
@@ -109,6 +110,7 @@ static String get discoveryUrl =>
 'https://$auth0Domain/.well-known/openid-configuration';
 static const scopes = ['openid', 'profile', 'email', 'offline_access'];
 }
+```
 ⚠️ Auth0 / OIDC setup:
 Allowed Callback URLs → https://com.example.flutter_authflow_advanced
 Allowed Logout URLs → https://com.example.flutter_authflow/
@@ -117,20 +119,28 @@ Allowed Logout URLs → https://com.example.flutter_authflow/
 
 🧪 Tests
 
-# ▶️ Run the app
+# Run the app
+```bash
 flutter pub get
 flutter run -d emulator-5554   # or your Android / iOS device
+```
 
 # Run all tests
+```bash
 flutter test --no-pub -j 1 -r expanded
+```
 
 # Run specific files
+```bash
 flutter test test/auth_repository_test.dart -r expanded
 flutter test test/dio_refresh_interceptor_test.dart -r expanded
+```
 
 # Generate coverage report
+```bash
 flutter test --coverage --no-pub
 genhtml coverage/lcov.info -o coverage/html   # then open coverage/html/index.html
+```
 
 Included tests:
 
