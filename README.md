@@ -89,7 +89,7 @@ lib/
 
 🧩 Key Ideas
 - AuthRepository orchestrates the entire flow:
-- 
+
 - beginAuth → exchangeCode → refresh → logout
 
 - Dio interceptors keep API code clean — all Authorization and refresh logic lives centrally.
@@ -103,11 +103,16 @@ lib/
 ```bash
 class AppEnv {
 static const auth0Domain = 'YOUR_TENANT.auth0.com';
+
 static const auth0ClientId = 'YOUR_CLIENT_ID';
+
 static const redirectUri = 'https://com.example.flutter_authflow_advanced';
+
 static const logoutRedirectUri = 'https://com.example.flutter_authflow/';
+
 static String get discoveryUrl =>
 'https://$auth0Domain/.well-known/openid-configuration';
+
 static const scopes = ['openid', 'profile', 'email', 'offline_access'];
 }
 ```
@@ -144,9 +149,11 @@ genhtml coverage/lcov.info -o coverage/html   # then open coverage/html/index.ht
 
 Included tests:
 
-File	                              What it verifies
-auth_repository_test.dart	          login, refresh, logout
-dio_refresh_interceptor_test.dart     401 → refresh → retry flow
+| 🧾 Test File                             | 🔍 What It Verifies                                 |
+| :--------------------------------------- | :-------------------------------------------------- |
+| `test/auth_repository_test.dart`         | ✅ Login, token refresh, and logout flows            |
+| `test/dio_refresh_interceptor_test.dart` | 🔄 401 → automatic refresh → request retry sequence |
+
 
 -------------------------------------------------------------------------
 
