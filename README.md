@@ -112,8 +112,8 @@ static const scopes = ['openid', 'profile', 'email', 'offline_access'];
 }
 ```
 ⚠️ Auth0 / OIDC setup:
-Allowed Callback URLs → https://com.example.flutter_authflow_advanced
-Allowed Logout URLs → https://com.example.flutter_authflow/
+- Allowed Callback URLs → https://com.example.flutter_authflow_advanced
+- Allowed Logout URLs → https://com.example.flutter_authflow/
 
 -------------------------------------------------------------------------
 
@@ -150,7 +150,7 @@ dio_refresh_interceptor_test.dart     401 → refresh → retry flow
 
 -------------------------------------------------------------------------
 
-🔌 Network & Token Flow
+# 🔌 Network & Token Flow
 All API calls go through buildAuthedDio():
 
 Attaches the latest Authorization: Bearer <access_token>
@@ -165,8 +165,8 @@ If refresh fails → clears tokens & navigates to login
 
 🖥️ Screens
 
-Login → native browser → Home (protected)
-Logout → clears tokens → back to Login
+- Login → native browser → Home (protected)
+- Logout → clears tokens → back to Login
 
 Login	Home
 
