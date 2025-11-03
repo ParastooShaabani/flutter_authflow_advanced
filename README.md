@@ -182,30 +182,20 @@ Storage	Local / GetStorage	Secure / FlutterSecureStorage
 Flow	Simulated PKCE exchange	Real browser-based AppAuth flow
 Logout	Local clear only	OIDC end_session + clear
 Tests	Mock-only	Real token + Dio refresh logic
-```mermaid
-flowchart LR
-subgraph Pro["AuthFlow Pro (Mock)"]
-A1["🧱 Local MockAuthServer"]
-A2["💾 GetStorage (Local Tokens)"]
-A3["🧩 Simulated PKCE Exchange"]
-A4["🚪 Local Clear Only (Logout)"]
-A5["🧪 Mock-only Tests"]
-A6["🌐 Basic Dio Interceptor (no refresh)"]
-A7["🔒 Dev-level Security / Local Data"]
-end
 
-    subgraph Adv["AuthFlow Advanced (Real)"]
-      B1["🌍 Real OIDC Provider (Auth0 / Keycloak / Django OAuth)"]
-      B2["🔐 Flutter Secure Storage (encrypted)"]
-      B3["🔑 Real Browser-based AppAuth Flow (PKCE)"]
-      B4["🚀 OIDC End Session + Secure Logout"]
-      B5["✅ Real Token + Dio Refresh Logic Tests"]
-      B6["⚙️ Advanced Dio Interceptors (Authorization + Refresh + Retry)"]
-      B7["🛡️ Production-grade Security + PKCE S256"]
-    end
+| Feature              | **AuthFlow Pro (Mock)**                         | **AuthFlow Advanced (Real)**                                    |
+| :------------------- | :---------------------------------------------- | :-------------------------------------------------------------- |
+| **Auth Server**      | 🧱 Local `MockAuthServer` (simulated endpoints) | 🌍 Real OIDC provider (Auth0 / Keycloak / Django OAuth Toolkit) |
+| **PKCE Flow**        | 🧩 Simulated authorization code flow            | 🔑 Real Authorization Code + PKCE via `flutter_appauth`         |
+| **Token Storage**    | 💾 `GetStorage` (local unsecured storage)       | 🔐 `FlutterSecureStorage` (encrypted native storage)            |
+| **Dio Interceptors** | 🌐 Single Authorization header only             | ⚙️ Full Auth + Refresh interceptors with 401 auto-retry         |
+| **Token Refresh**    | 🚫 None (manual expiry simulation)              | ♻️ Automatic refresh via `RefreshInterceptor`                   |
+| **Logout Flow**      | 🚪 Local token clear only                       | 🚀 OIDC `end_session_endpoint` + secure logout                  |
+| **Testing Coverage** | 🧪 Mock-only PKCE and storage tests             | ✅ Real login / refresh / logout + Dio retry unit tests          |
+| **Security Level**   | 🔓 Dev/demo grade                               | 🛡️ Production-ready (PKCE S256 + encrypted tokens)             |
+| **CI Integration**   | ⚙️ Manual testing                               | 🤖 GitHub Actions CI + coverage upload                          |
+| **Use Case**         | 🧰 Educational demo                             | 🚀 Showcase of real enterprise-grade OIDC integration           |
 
-    Pro --> Adv
-```
 ⚙️ Continuous Integration (GitHub Actions)
 Runs automatically on every push / PR:
 ```bash
