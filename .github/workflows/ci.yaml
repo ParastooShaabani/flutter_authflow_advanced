@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter (stable)
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Flutter version
+        run: flutter --version
+
+      - name: Cache pub
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            ~/.dartServer
+            .dart_tool
+          key: ${{ runner.os }}-pub-${{ hashFiles('pubspec.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
+      - name: Pub get
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run unit tests with coverage
+        run: flutter test --coverage --no-pub -j 1 -r expanded
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-lcov
+          path: coverage/lcov.info
