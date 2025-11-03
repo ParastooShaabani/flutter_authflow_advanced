@@ -176,12 +176,6 @@ Login	Home
 
 
 🧠 How It Differs from AuthFlow Pro
-Feature	AuthFlow Pro (Mock)	AuthFlow Advanced (Real)
-Auth Server	Local mock class (MockAuthServer)	Real OIDC provider (Auth0, etc.)
-Storage	Local / GetStorage	Secure / FlutterSecureStorage
-Flow	Simulated PKCE exchange	Real browser-based AppAuth flow
-Logout	Local clear only	OIDC end_session + clear
-Tests	Mock-only	Real token + Dio refresh logic
 
 | Feature              | **AuthFlow Pro (Mock)**                         | **AuthFlow Advanced (Real)**                                    |
 | :------------------- | :---------------------------------------------- | :-------------------------------------------------------------- |
@@ -196,10 +190,13 @@ Tests	Mock-only	Real token + Dio refresh logic
 | **CI Integration**   | ⚙️ Manual testing                               | 🤖 GitHub Actions CI + coverage upload                          |
 | **Use Case**         | 🧰 Educational demo                             | 🚀 Showcase of real enterprise-grade OIDC integration           |
 
+-------------------------------------------------------------------------
+
 ⚙️ Continuous Integration (GitHub Actions)
 Runs automatically on every push / PR:
-```bash
+
 Steps:
+```bash
 
 flutter pub get
 
@@ -207,7 +204,6 @@ flutter analyze
 
 flutter test --coverage
 
-Uploads coverage artifact
 ```
 📄 License
 MIT © 2025 Parastoo Shaabani
