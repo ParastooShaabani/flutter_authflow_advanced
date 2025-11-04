@@ -114,7 +114,6 @@ You can easily create these values using a free [`Auth0 Developer Account`](http
 
 🔧 Auth0 configuration steps
 
-[//]: # (```text)
 Go to your Auth0 Dashboard → Applications → Create Application.
 
 Choose Native type (for Flutter apps).
@@ -127,19 +126,16 @@ Enable Refresh Token Rotation.
 
 Turn on OIDC Conformant.
 
-Copy your Domain and Client ID into AppEnv.
-
-💡 These variables are safe to share publicly (they’re identifiers, not secrets),
-but if you plan to reuse this repo, replace them with placeholders like:
-
+Copy your Domain and Client ID into AppEnv like this :
+```bash
 static const auth0Domain = 'YOUR_TENANT.auth0.com';
 static const auth0ClientId = 'YOUR_CLIENT_ID';
+```
 
 ⚠️ Auth0 / OIDC setup in AndroidManifest.xml:
 - Allowed Callback URLs → https://com.example.flutter_authflow_advanced
 - Allowed Logout URLs → https://com.example.flutter_authflow/
 
-[//]: # (```)
 -------------------------------------------------------------------------
 
 🧪 Tests
