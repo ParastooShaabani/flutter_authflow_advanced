@@ -113,7 +113,8 @@ You can easily create these values using a free [`Auth0 Developer Account`](http
 | `scopes`            | `openid profile email offline_access`           | Standard OIDC scopes including refresh token support.                |
 
 🔧 Auth0 configuration steps
-```text
+
+[//]: # (```text)
 Go to your Auth0 Dashboard → Applications → Create Application.
 
 Choose Native type (for Flutter apps).
@@ -137,7 +138,8 @@ static const auth0ClientId = 'YOUR_CLIENT_ID';
 ⚠️ Auth0 / OIDC setup in AndroidManifest.xml:
 - Allowed Callback URLs → https://com.example.flutter_authflow_advanced
 - Allowed Logout URLs → https://com.example.flutter_authflow/
-```
+
+[//]: # (```)
 -------------------------------------------------------------------------
 
 🧪 Tests
