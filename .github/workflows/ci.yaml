@@ -1,3 +1,4 @@
+# .github/workflows/ci.yaml
 name: CI
 
 on:
@@ -6,9 +7,17 @@ on:
   pull_request:
     branches: [ main, master ]
 
+env:
+  # If your Flutter project is in a subfolder, set it here (e.g., 'app').
+  PROJECT_DIR: .
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ${{ env.PROJECT_DIR }}
 
     steps:
       - name: Checkout
@@ -17,11 +26,20 @@ jobs:
       - name: Setup Flutter (stable)
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.35.6'   # match your local
           channel: stable
+          cache: true
 
-      - name: Flutter version
-        run: flutter --version
+      # (Optional) quick diagnostics to confirm we're in the right folder
+      - name: Show repo tree
+        run: |
+          pwd
+          ls -la
 
+      - name: Verify pubspec exists
+        run: test -f pubspec.yaml && echo "pubspec.yaml found"
+
+      # Cache pub packages (use a generic key; robust even if path changes)
       - name: Cache pub
         uses: actions/cache@v4
         with:
@@ -29,7 +47,7 @@ jobs:
             ~/.pub-cache
             ~/.dartServer
             .dart_tool
-          key: ${{ runner.os }}-pub-${{ hashFiles('pubspec.yaml') }}
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-pub-
 
@@ -40,7 +58,7 @@ jobs:
         run: flutter analyze
 
       - name: Run unit tests with coverage
-        run: flutter test --coverage --no-pub -j 1 -r expanded
+        run: flutter test --coverage -j 1 -r expanded
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
