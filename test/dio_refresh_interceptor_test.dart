@@ -83,7 +83,7 @@ void main() {
 
         final dio = Dio();
 
-        // 🔒 Never hit network
+        // Never hit network
         final fake = _FakeAdapter();
         dio.httpClientAdapter = fake;
 
