@@ -42,8 +42,8 @@ class TokenStoreImpl implements TokenStore {
       _box = GetStorage(_boxName);
     }
     // Warm current value into the stream (works for both branches)
-    _controller.add(await read());
     _initialized = true;
+    _controller.add(await read());
   }
 
   @override
