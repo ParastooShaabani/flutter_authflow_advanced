@@ -116,7 +116,7 @@ static String get discoveryUrl =>
 static const scopes = ['openid', 'profile', 'email', 'offline_access'];
 }
 ```
-⚠️ Auth0 / OIDC setup:
+⚠️ Auth0 / OIDC setup in AndroidManifest.xml:
 - Allowed Callback URLs → https://com.example.flutter_authflow_advanced
 - Allowed Logout URLs → https://com.example.flutter_authflow/
 
@@ -150,7 +150,7 @@ genhtml coverage/lcov.info -o coverage/html   # then open coverage/html/index.ht
 Included tests:
 
 | 🧾 Test File                             | 🔍 What It Verifies                                 |
-| :--------------------------------------- | :-------------------------------------------------- |
+|:-----------------------------------------|:----------------------------------------------------|
 | `test/auth_repository_test.dart`         | ✅ Login, token refresh, and logout flows            |
 | `test/dio_refresh_interceptor_test.dart` | 🔄 401 → automatic refresh → request retry sequence |
 
@@ -192,7 +192,7 @@ Login	Home
 🧠 How It Differs from AuthFlow Pro
 
 | Feature              | **AuthFlow Pro (Mock)**                         | **AuthFlow Advanced (Real)**                                    |
-| :------------------- | :---------------------------------------------- | :-------------------------------------------------------------- |
+|:---------------------|:------------------------------------------------|:----------------------------------------------------------------|
 | **Auth Server**      | 🧱 Local `MockAuthServer` (simulated endpoints) | 🌍 Real OIDC provider (Auth0 / Keycloak / Django OAuth Toolkit) |
 | **PKCE Flow**        | 🧩 Simulated authorization code flow            | 🔑 Real Authorization Code + PKCE via `flutter_appauth`         |
 | **Token Storage**    | 💾 `GetStorage` (local unsecured storage)       | 🔐 `FlutterSecureStorage` (encrypted native storage)            |
