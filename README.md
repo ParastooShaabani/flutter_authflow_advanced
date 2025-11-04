@@ -100,26 +100,44 @@ lib/
 
 - Logout calls the OIDC end_session_endpoint and clears secure storage.
 
-```bash
-class AppEnv {
-static const auth0Domain = 'YOUR_TENANT.auth0.com';
+🌐 OIDC / Auth0 Setup
 
+You can easily create these values using a free [`Auth0 Developer Account`](https://auth0.com/):
+
+| Variable            | Example                                         | Description                                                          |
+|---------------------|-------------------------------------------------|----------------------------------------------------------------------|
+| `auth0Domain`       | `dev-xxxxxx.au.auth0.com`                       | Your Auth0 tenant domain (found in dashboard).                       |
+| `auth0ClientId`     | `YOUR_CLIENT_ID`                                | Public client ID for your Flutter app (no secret required).          |
+| `redirectUri`       | `https://com.example.flutter_authflow_advanced` | Must match the **Allowed Callback URLs** in your Auth0 app settings. |
+| `logoutRedirectUri` | `https://com.example.flutter_authflow/`         | Must match the **Allowed Logout URLs**.                              |
+| `scopes`            | `openid profile email offline_access`           | Standard OIDC scopes including refresh token support.                |
+
+🔧 Auth0 configuration steps
+```text
+Go to your Auth0 Dashboard → Applications → Create Application.
+
+Choose Native type (for Flutter apps).
+
+Under Settings:
+
+Add your redirect and logout URIs.
+
+Enable Refresh Token Rotation.
+
+Turn on OIDC Conformant.
+
+Copy your Domain and Client ID into AppEnv.
+
+💡 These variables are safe to share publicly (they’re identifiers, not secrets),
+but if you plan to reuse this repo, replace them with placeholders like:
+
+static const auth0Domain = 'YOUR_TENANT.auth0.com';
 static const auth0ClientId = 'YOUR_CLIENT_ID';
 
-static const redirectUri = 'https://com.example.flutter_authflow_advanced';
-
-static const logoutRedirectUri = 'https://com.example.flutter_authflow/';
-
-static String get discoveryUrl =>
-'https://$auth0Domain/.well-known/openid-configuration';
-
-static const scopes = ['openid', 'profile', 'email', 'offline_access'];
-}
-```
 ⚠️ Auth0 / OIDC setup in AndroidManifest.xml:
 - Allowed Callback URLs → https://com.example.flutter_authflow_advanced
 - Allowed Logout URLs → https://com.example.flutter_authflow/
-
+```
 -------------------------------------------------------------------------
 
 🧪 Tests
