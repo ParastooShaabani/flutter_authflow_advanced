@@ -132,18 +132,16 @@ Dio buildAuthedDio() {
     );
   }
 
-  // Demo mock protected endpoint
   bool first401 = true;
   dio.interceptors.add(
     InterceptorsWrapper(
       onRequest: (options, handler) {
-        final uri = options.uri;
-        if (uri.host == 'mockapi.local' && uri.path == '/secret') {
+        // When baseUrl is set, '/__mock__/secret' → http(s)://localhost:PORT/__mock__/secret
+        if (options.uri.path == '/__mock__/secret') {
           final authHeader = options.headers['Authorization'] as String?;
-          final isBearer = authHeader?.startsWith('Bearer access_') ?? false;
+          final hasBearer = authHeader?.startsWith('Bearer access_') ?? false;
 
-          // Force a single 401 once to showcase the refresh/retry flow
-          if (!isBearer || first401) {
+          if (first401 || !hasBearer) {
             first401 = false;
             return handler.reject(
               DioException(
@@ -162,9 +160,11 @@ Dio buildAuthedDio() {
             ),
           );
         }
+
         handler.next(options);
       },
     ),
   );
+
   return dio;
 }

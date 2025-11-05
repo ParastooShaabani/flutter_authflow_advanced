@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_authflow_advanced/core/di/locator.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_authflow_advanced/routes/app_routes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -35,7 +37,8 @@ class _HomePageState extends State<HomePage> {
     try {
       final Dio dio = buildAuthedDio();
       // Mobile demo call; ok on Android/iOS. (CORS will block this on Web.)
-      final res = await dio.get('https://postman-echo.com/get');
+      final url = kIsWeb ? '/__mock__/secret' : 'https://postman-echo.com/get';
+      final res = await dio.get(url);
       if (!ctx.mounted) return;
       setState(() => secret = res.data.toString());
     } catch (e) {
@@ -100,4 +103,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

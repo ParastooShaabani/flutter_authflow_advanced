@@ -13,6 +13,12 @@ final sl = GetIt.instance;
 /// Registers all dependencies used across the app.
 /// Handles platform-specific bindings (real AppAuth vs mock flow for web).
 Future<void> setupLocator() async {
+  final dio = Dio();
+
+  if (kIsWeb) {
+    dio.options.baseUrl = Uri.base.origin; // e.g. http://localhost:12345
+  }
+
   // Shared instances
   sl.registerSingleton<Dio>(Dio());
 
